@@ -1,5 +1,5 @@
 import CareerModel from "../models/career.model.js";
-import logger from "../../../lib/utils/logger.js";
+import logger from "../../../../lib/utils/logger.js";
 
 const listAllCareers = async (req, res) => {
   try {

@@ -100,7 +100,20 @@ CREATE TABLE IF NOT EXISTS appointment_booking(
     type_of_service varchar(255) not null,
     message_notes text,
     status enum("pending", "read", "unread", "archive") default "pending",
-    is_deleted tinyint(0) default 0,
+    is_deleted tinyint(1) default 0,
+
+    createdAt timestamp default current_timestamp,
+    updatedAt timestamp default current_timestamp on update current_timestamp
+);
+
+CREATE TABLE IF NOT EXISTS testimonials(
+    id int primary key auto_increment not null unique,
+    fullname varchar(255) not null,
+    description varchar(255) not null,
+    rating bigint default 3,
+
+    is_active tinyint(1) default 1,
+    is_deleted tinyint(1) default 0,
 
     createdAt timestamp default current_timestamp,
     updatedAt timestamp default current_timestamp on update current_timestamp
