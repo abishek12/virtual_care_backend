@@ -16,7 +16,7 @@ const deleteBooking = async (req, res) => {
     }
     await booking.update(
       {
-        is_delete: 1,
+        is_deleted: 1,
       },
       {
         where: {

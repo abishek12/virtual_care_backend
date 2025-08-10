@@ -39,15 +39,19 @@ BookingModel.init(
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    staud: {
+    status: {
       type: DataTypes.ENUM("pending", "read", "unread", "archive"),
       defaultValue: "pending",
+    },
+    is_deleted: {
+      type: DataTypes.TINYINT,
+      defaultValue: 0,
     },
   },
   {
     sequelize,
     modelName: "booking",
-    tableName: "booking",
+    tableName: "appointment_booking",
     freezeTableName: true,
     timestamps: true,
   }

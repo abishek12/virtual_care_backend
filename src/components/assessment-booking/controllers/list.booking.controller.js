@@ -1,4 +1,5 @@
 import BookingModel from "../model/booking.model.js";
+import logger from "../../../lib/utils/logger.js";
 
 const listAllBooking = async (req, res) => {
   try {
