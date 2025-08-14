@@ -53,10 +53,12 @@ CREATE TABLE IF NOT EXISTS blogs(
     category_id int not null,
     tags JSON null,
     author_id int not null,
+    status enum("draft", "pending", "published"),
     featured_image varchar(255) not null,
-    short_description varchar(50) not null,
+    short_description text not null,
     description JSON,
     seo JSON null,
+    is_deleted tinyint(1) default 0,
 
     foreign key(author_id) references users(id),
     foreign key(category_id) references categories(id),
