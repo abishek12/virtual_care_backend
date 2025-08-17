@@ -92,6 +92,17 @@ CREATE TABLE IF NOT EXISTS contacts(
     updatedAt timestamp default current_timestamp on update current_timestamp
 );
 
+CREATE TABLE IF NOT EXISTS teams(
+    id int primary key auto_increment not null unique,
+    fullname varchar(255) not null,
+    designation varchar(255) not null,
+    profile_image varchar(255) not null,
+    status enum('active', 'inactive') default 'active',
+    
+    createdAt timestamp default current_timestamp,
+    updatedAt timestamp default current_timestamp on update current_timestamp
+);
+
 CREATE TABLE IF NOT EXISTS appointment_booking(
     id int primary key auto_increment not null unique,
     fullname varchar(255) not null,
