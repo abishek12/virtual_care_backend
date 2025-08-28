@@ -20,14 +20,6 @@ jobs:
         node-version: '18'
         cache: 'npm'
 
-    - name: Install dependencies
-      run: npm install
-      # Remove if not using Node.js
-
-    - name: Build project (if needed)
-      run: npm run build
-      # Remove if not needed
-
     - name: Setup SSH
       uses: webfactory/ssh-agent@v0.8.0
       with:
