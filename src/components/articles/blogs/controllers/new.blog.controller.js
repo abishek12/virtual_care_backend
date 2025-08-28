@@ -16,9 +16,18 @@ export const createBlog = async (req, res) => {
       });
     }
 
+    // Check if image was uploaded
+    if (!req.file || !req.file.path) {
+      return res.status(400).json({
+        success: false,
+        message: "Image is required",
+      });
+    }
+
     let items = await BlogModel.create({
       ...value,
       slugs: slugs(value.title),
+      featured_image: req.file.path,
     });
 
     logger.info(`Blog created successfully at ${new Date()}`);
