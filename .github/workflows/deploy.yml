@@ -1,0 +1,70 @@
+name: Deploy to CPanel
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js (if needed)
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install
+      # Remove if not using Node.js
+
+    - name: Build project (if needed)
+      run: npm run build
+      # Remove if not needed
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.CPANEL_SSH_KEY }}
+
+    - name: Test SSH connection
+      run: |
+        ssh -o StrictHostKeyChecking=no -p ${{ secrets.CPANEL_PORT || 22 }} \
+        ${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }} "echo SSH connection successful"
+
+    - name: Deploy to CPanel
+      run: |
+        # Create deployment directory structure
+        ssh -o StrictHostKeyChecking=no -p ${{ secrets.CPANEL_PORT || 22 }} \
+        ${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }} \
+        "mkdir -p ~/deploy-temp && rm -rf ~/deploy-temp/*"
+        
+        # Copy files to temporary directory
+        rsync -avz -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.CPANEL_PORT || 22 }}" \
+        --exclude='.git' --exclude='.github' --exclude='node_modules' \
+        ./ ${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}:~/deploy-temp/
+        
+        # Move files to public_html and set permissions
+        ssh -o StrictHostKeyChecking=no -p ${{ secrets.CPANEL_PORT || 22 }} \
+        ${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }} \
+        "rsync -av --delete ~/deploy-temp/ ~/public_html/ && \
+        chmod -R 755 ~/public_html && \
+        chmod -R 644 ~/public_html/* && \
+        find ~/public_html -type f -name '*.php' -exec chmod 644 {} \; && \
+        rm -rf ~/deploy-temp"
+        
+        # Clear cache if needed (example for WordPress)
+        ssh -o StrictHostKeyChecking=no -p ${{ secrets.CPANEL_PORT || 22 }} \
+        ${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }} \
+        "cd ~/public_html && wp cache flush" || true
+
+    - name: Send deployment notification
+      run: |
+        echo "Deployment completed successfully!"
+        # Add notification service here (Slack, Discord, Email)
