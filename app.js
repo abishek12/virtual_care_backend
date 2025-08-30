@@ -21,6 +21,7 @@ app.use(
       "http://localhost:3000",
       "http://localhost:5000",
       "http://localhost:5173",
+      "https://api.vitalcaregroup.com.au",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
