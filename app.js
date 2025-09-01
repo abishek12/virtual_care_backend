@@ -19,8 +19,9 @@ const whitelist = [
   "http://localhost:3000",
   "http://localhost:5000",
   "http://localhost:5173",
-  "https://account.vitalcaregroup.com.au",
   "https://vitalcaregroup.com.au",
+  "https://account.vitalcaregroup.com.au",
+  "https://api.vitalcaregroup.com.au",
 ];
 const corsOptions = {
   origin: (origin, callback) => {
