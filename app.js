@@ -15,18 +15,31 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:5000",
-      "http://localhost:5173",
-      "https://api.vitalcaregroup.com.au",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+const whitelist = [
+  "http://localhost:3000",
+  "http://localhost:5000",
+  "http://localhost:5173",
+  "https://account.vitalcaregroup.com.au",
+  "https://vitalcaregroup.com.au",
+];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin) {
+      // Allow non-browser clients like curl, Postman
+      return callback(null, true);
+    }
+    if (whitelist.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // if you need cookies/JWTs
+  optionsSuccessStatus: 200, // for older browsers
+};
+app.use(cors(corsOptions));
+
 // app.use(helmet());
 app.use(compression());
 app.use(express.json());
