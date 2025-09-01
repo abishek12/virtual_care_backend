@@ -23,23 +23,22 @@ const whitelist = [
   "https://account.vitalcaregroup.com.au",
   "https://api.vitalcaregroup.com.au",
 ];
+
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin) {
-      // Allow non-browser clients like curl, Postman
-      return callback(null, true);
-    }
+    if (!origin) return callback(null, true); // allow server-to-server calls
     if (whitelist.includes(origin)) {
       return callback(null, true);
     }
     return callback(new Error("Not allowed by CORS"));
   },
+  credentials: true, // allow cookies/JWT in requests
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true, // if you need cookies/JWTs
-  optionsSuccessStatus: 200, // for older browsers
 };
+
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // app.use(helmet());
 app.use(compression());
