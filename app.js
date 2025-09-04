@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import compression from "compression";
 import morgan from "morgan";
+import helmet from "helmet";
 
 import { errorHandler } from "./src/middlewares/error.middleware.js";
 import { connectDB } from "./src/lib/constants/database.js";
@@ -13,27 +14,33 @@ const app = express();
 // Connect to Database
 connectDB();
 
-// const corsOptions = {
-//   origin: (origin, callback) => {
-//     if (!origin) return callback(null, true); // allow server-to-server calls
-//     if (whitelist.includes(origin)) {
-//       return callback(null, true);
-//     }
-//     return callback(new Error("Not allowed by CORS"));
-//   },
-//   credentials: true, // allow cookies/JWT in requests
-//   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-//   allowedHeaders: ["Content-Type", "Authorization"],
-// };
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
 
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
+    const localhostRegex = /^http:\/\/localhost:\d+$/;
 
-// app.use(helmet());
+    const allowedDomains = [
+      /^https:\/\/(.*\.)?vitalcaregroup\.com.au$/,
+      /^https:\/\/staging\.vitalcaregroup\.com.au$/,
+    ];
+
+    if (
+      localhostRegex.test(origin) ||
+      allowedDomains.some((regex) => regex.test(origin))
+    ) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
+app.use(helmet());
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
