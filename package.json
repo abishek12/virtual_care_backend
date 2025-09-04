@@ -28,7 +28,9 @@
     "winston": "^3.13.0"
   },
   "description": "This is the backend for the mama application.",
-  "devDependencies": {},
+  "devDependencies": {
+    "pm2": "^6.0.10"
+  },
   "keywords": [],
   "author": "Abishek Khanal",
   "repository": "https://github.com/abishek12/virtual_care_backend.git"
