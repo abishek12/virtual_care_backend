@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 
@@ -22,6 +21,9 @@ const whitelist = [
   "https://vitalcaregroup.com.au",
   "https://account.vitalcaregroup.com.au",
   "https://api.vitalcaregroup.com.au",
+  "https://vitalcaregroup.com.au/",
+  "https://account.vitalcaregroup.com.au/",
+  "https://api.vitalcaregroup.com.au/",
 ];
 
 const corsOptions = {
