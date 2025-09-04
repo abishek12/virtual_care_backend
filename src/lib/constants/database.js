@@ -27,13 +27,13 @@ const sequelize = new Sequelize(db_name, db_user, db_pass, {
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    // if (env !== "production") {
-    //   await sequelize.sync({ alter: true });
-    // } else {
-    //   logger.info(
-    //     "Production environment: Schema should be managed through migrations"
-    //   );
-    // }
+    if (env !== "production") {
+      await sequelize.sync({ alter: true });
+    } else {
+      logger.info(
+        "Production environment: Schema should be managed through migrations"
+      );
+    }
     logger.info("Connected to DB");
   } catch (err) {
     logger.error(`Database connection failed: ${err}`);

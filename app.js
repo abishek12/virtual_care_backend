@@ -13,34 +13,25 @@ const app = express();
 // Connect to Database
 connectDB();
 
-// Middleware
-const whitelist = [
-  "http://localhost:3000",
-  "http://localhost:5000",
-  "http://localhost:5173",
-  "https://vitalcaregroup.com.au",
-  "https://account.vitalcaregroup.com.au",
-  "https://api.vitalcaregroup.com.au",
-  "https://vitalcaregroup.com.au/",
-  "https://account.vitalcaregroup.com.au/",
-  "https://api.vitalcaregroup.com.au/",
-];
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (!origin) return callback(null, true); // allow server-to-server calls
+//     if (whitelist.includes(origin)) {
+//       return callback(null, true);
+//     }
+//     return callback(new Error("Not allowed by CORS"));
+//   },
+//   credentials: true, // allow cookies/JWT in requests
+//   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+// };
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true); // allow server-to-server calls
-    if (whitelist.includes(origin)) {
-      return callback(null, true);
-    }
-    return callback(new Error("Not allowed by CORS"));
-  },
-  credentials: true, // allow cookies/JWT in requests
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 // app.use(helmet());
 app.use(compression());
