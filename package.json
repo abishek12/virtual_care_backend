@@ -30,5 +30,6 @@
   "description": "This is the backend for the mama application.",
   "devDependencies": {},
   "keywords": [],
-  "author": "Abishek Khanal"
+  "author": "Abishek Khanal",
+  "repository": "https://github.com/abishek12/virtual_care_backend.git"
 }
