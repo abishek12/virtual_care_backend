@@ -14,27 +14,31 @@ const app = express();
 // Connect to Database
 connectDB();
 
-origin: (origin, callback) => {
-  console.log("🌍 Incoming CORS Origin:", origin); // log in prod
+const corsOptions = {
+  origin: (origin, callback) => {
+    console.log("🌍 Incoming CORS Origin:", origin); // log in prod
 
-  if (!origin) return callback(null, true);
+    if (!origin) return callback(null, true);
 
-  const localhostRegex = /^http:\/\/localhost:\d+$/;
-  const allowedDomains = [
-    /^https:\/\/(.*\.)?vitalcaregroup\.com.au$/,
-    /^https:\/\/api\.vitalcaregroup\.com.au$/,
-  ];
+    const localhostRegex = /^http:\/\/localhost:\d+$/;
+    const allowedDomains = [
+      /^https:\/\/(.*\.)?vitalcaregroup\.com.au$/,
+      /^https:\/\/api\.vitalcaregroup\.com.au$/,
+    ];
 
-  if (
-    localhostRegex.test(origin) ||
-    allowedDomains.some((regex) => regex.test(origin))
-  ) {
-    console.log("✅ Allowed:", origin);
-    return callback(null, true);
-  }
+    if (
+      localhostRegex.test(origin) ||
+      allowedDomains.some((regex) => regex.test(origin))
+    ) {
+      console.log("✅ Allowed:", origin);
+      return callback(null, true);
+    }
 
-  console.log("❌ Blocked:", origin);
-  return callback(new Error("Not allowed by CORS"));
+    console.log("❌ Blocked:", origin);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
