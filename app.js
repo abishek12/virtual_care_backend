@@ -14,33 +14,21 @@ const app = express();
 // Connect to Database
 connectDB();
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    console.log("🌍 CORS Origin:", origin);
-
-    if (!origin) return callback(null, true);
-
-    const allowedDomains = [
-      /^https:\/\/account\.vitalcaregroup\.com\.au$/,
-      /^https:\/\/vitalcaregroup\.com\.au$/,
-    ];
-
-    if (allowedDomains.some((regex) => regex.test(origin))) {
-      return callback(null, true);
-    }
-
-    return callback(new Error("Not allowed by CORS"));
-  },
+var corsOptions = {
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://vitalcaregroup.com.au",
+    "https://www.vitalcaregroup.com.au",
+    "https://www.api.vitalcaregroup.com.au",
+    "https://api.vitalcaregroup.com.au",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
-
-// 👇 Handle OPTIONS requests globally
-// app.options("*", cors(corsOptions));
-
+app.use(cors(corsOptions))
 app.use(helmet());
 app.use(compression());
 app.use(express.json());
