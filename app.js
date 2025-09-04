@@ -16,13 +16,14 @@ connectDB();
 
 const corsOptions = {
   origin: (origin, callback) => {
+    console.log("CORS request from:", origin);
+
     if (!origin) return callback(null, true);
 
     const localhostRegex = /^http:\/\/localhost:\d+$/;
-
     const allowedDomains = [
       /^https:\/\/(.*\.)?vitalcaregroup\.com.au$/,
-      /^https:\/\/staging\.vitalcaregroup\.com.au$/,
+      /^https:\/\/api\.vitalcaregroup\.com.au$/,
     ];
 
     if (
