@@ -33,5 +33,12 @@
   },
   "keywords": [],
   "author": "Abishek Khanal",
-  "repository": "https://github.com/abishek12/virtual_care_backend.git"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abishek12/virtual_care_backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abishek12/virtual_care_backend/issues"
+  },
+  "homepage": "https://github.com/abishek12/virtual_care_backend#readme"
 }
