@@ -1,9 +1,9 @@
 import Joi from "joi";
 
-const testimonial = Joi.object({
+export const testimonialSchema = Joi.object({
   fullname: Joi.string().required(),
   description: Joi.string().required(),
   rating: Joi.number().integer().default(3),
+  is_active: Joi.boolean().default(true),
 });
 
-export default testimonial;

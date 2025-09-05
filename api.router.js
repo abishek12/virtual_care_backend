@@ -8,6 +8,7 @@ import authRoute from "./src/components/authentication/router/auth.route.js";
 import serviceRoute from "./src/components/services/router/service.route.js";
 import contactRoute from "./src/components/contact/router/contact.route.js";
 import bookingRoute from "./src/components/assessment-booking/router/booking.router.js";
+import testimonialRoute from "./src/components/testimonial/router/testimonial.route.js";
 
 import articleRoute from "./src/components/articles/article.route.js";
 
@@ -17,6 +18,7 @@ router
   .use("/service", serviceRoute)
   .use("/contact", contactRoute)
   .use("/article", articleRoute)
-  .use("/booking", bookingRoute);
+  .use("/booking", bookingRoute)
+  .use("/testimonial", testimonialRoute);
 
 export default router;

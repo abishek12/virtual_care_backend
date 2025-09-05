@@ -1,13 +1,18 @@
 import TestimonialModel from "../model/testimonial.model.js";
-import logger from "../../../../lib/utils/logger.js";
+import logger from "../../../lib/utils/logger.js";
 
 const listAllTestimonial = async (req, res) => {
   try {
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 10;
 
+    let whereCondition = {}
+
     let { rows: items, count } = await TestimonialModel.findAndCountAll({
-      where: {},
+      where: {
+        ...whereCondition,
+        is_deleted: false,
+      },
       limit: limit,
       offset: (page - 1) * limit,
     });
