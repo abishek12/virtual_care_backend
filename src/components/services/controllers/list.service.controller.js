@@ -1,4 +1,5 @@
 import ServiceModel from "../model/ServiceModel.js";
+import logger from "../../../lib/utils/logger.js";
 
 const listAllServices = async (req, res) => {
   try {
