@@ -33,7 +33,7 @@ const listAllCareers = async (req, res) => {
       success: true,
       items,
       pagination,
-      message: "Success",
+      message: "Career fetched successfully",
     });
   } catch (error) {
     logger.error(`Error: ${error}`);

@@ -9,6 +9,7 @@ import serviceRoute from "./src/components/services/router/service.route.js";
 import contactRoute from "./src/components/contact/router/contact.route.js";
 import bookingRoute from "./src/components/assessment-booking/router/booking.router.js";
 import testimonialRoute from "./src/components/testimonial/router/testimonial.route.js";
+import careerRouter from "./src/components/career/router/career.route.js";
 
 import articleRoute from "./src/components/articles/article.route.js";
 
@@ -19,6 +20,7 @@ router
   .use("/contact", contactRoute)
   .use("/article", articleRoute)
   .use("/booking", bookingRoute)
-  .use("/testimonial", testimonialRoute);
+  .use("/testimonial", testimonialRoute)
+  .use("/career", careerRouter);
 
 export default router;

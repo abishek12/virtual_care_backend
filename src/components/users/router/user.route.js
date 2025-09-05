@@ -13,8 +13,8 @@ import {
 import deleteUser from "../controllers/delete.user.controller.js";
 
 router
-  .get("", listUserController)
+  .get("", authenticate, authorize("readAny", "profile"), listUserController)
   .get("/me", authenticate, authorize("readOwn", "profile"), userProfile)
-  .delete("/:id", deleteUser);
+  .delete("/:id", authenticate, authorize("deleteOwn", "profile"), deleteUser);
 
 export default router;

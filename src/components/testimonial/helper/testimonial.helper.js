@@ -6,4 +6,3 @@ export const testimonialSchema = Joi.object({
   rating: Joi.number().integer().default(3),
   is_active: Joi.boolean().default(true),
 });
-
