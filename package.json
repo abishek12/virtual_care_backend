@@ -9,6 +9,7 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "accesscontrol": "^2.2.1",
     "bcryptjs": "^3.0.2",
     "chalk": "^5.5.0",
     "cloudinary": "^2.7.0",

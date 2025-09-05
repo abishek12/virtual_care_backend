@@ -43,10 +43,11 @@ const listUserController = async (req, res) => {
 
 const userProfile = async (req, res) => {
   try {
-    let { username } = req.params;
+    let userid = req.user.id;
 
     let item = await UserModel.findOne({
-      where: { username },
+      where: { id: userid, is_deleted: 0 },
+      attributes: { exclude: ["password"] },
     }).then((value) => {
       if (!value) {
         logger.error("User not found");

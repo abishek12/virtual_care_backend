@@ -42,7 +42,7 @@ const loginController = async (req, res) => {
     }
 
     const access_token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, role: user.role },
       process.env.JWT_ACCESS_SECRET,
       {
         expiresIn: "15m",
@@ -50,7 +50,7 @@ const loginController = async (req, res) => {
     );
 
     const refresh_token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, role: user.role },
       process.env.JWT_REFRESH_SECRET,
       {
         expiresIn: "7d",
@@ -58,6 +58,13 @@ const loginController = async (req, res) => {
     );
 
     logger.info(`${user.fullname} logged in successfully at ${new Date()}`);
+
+     res.cookie("refresh_token", refresh_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     return res.status(200).json({
       success: true,

@@ -1,4 +1,8 @@
 import express from "express";
+import {
+  authenticate,
+  authorize,
+} from "../../../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
@@ -10,7 +14,7 @@ import deleteUser from "../controllers/delete.user.controller.js";
 
 router
   .get("", listUserController)
-  .get("/:username", userProfile)
+  .get("/me", authenticate, authorize("readOwn", "profile"), userProfile)
   .delete("/:id", deleteUser);
 
 export default router;
