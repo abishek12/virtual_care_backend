@@ -1,13 +1,22 @@
-import CareerModel from "../models/career.model.js";
-import logger from "../../../../lib/utils/logger.js";
+import CareerRecepientModel from "../models/career.model.js";
+import logger from "../../../lib/utils/logger.js";
 
 const listAllCareers = async (req, res) => {
   try {
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 10;
+    let status = req.query.status || "";
 
-    let { rows: items, count } = await CareerModel.findAndCountAll({
-      where: {},
+    let whereCondition = {};
+
+    if (status) {
+      whereCondition.status = status;
+    }
+
+    let { rows: items, count } = await CareerRecepientModel.findAndCountAll({
+      where: {
+        ...whereCondition,
+      },
       limit: limit,
       offset: (page - 1) * limit,
     });

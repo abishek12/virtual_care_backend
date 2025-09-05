@@ -132,39 +132,20 @@ CREATE TABLE IF NOT EXISTS testimonials(
     updatedAt timestamp default current_timestamp on update current_timestamp
 );
 
-CREATE TABLE IF NOT EXISTS career(
-    id int primary key auto_increment not null unique,
-    title varchar(255) not null,
-    slug varchar(255) not null unique,
-    tags JSON not null,
-    short_description varchar(100) not null,
-    responsibilities JSON not null,
-    requirements JSON not null,
-    author_id int not null,
-
-    foreign key(author_id) references users(id),
-
-    createdAt timestamp default current_timestamp,
-    updatedAt timestamp default current_timestamp on update current_timestamp
-);
-
-CREATE TABLE IF NOT EXISTS career_cv(
-    id int primary key auto_increment not null unique,
-);
-
 CREATE TABLE IF NOT EXISTS career_recepients(
     id int primary key auto_increment not null unique,
-    career_id int not null,
-    fullname varchar(255) not null,
+    first_name varchar(255) not null,
+    last_name varchar(255) not null,
     email varchar(255) not null,
     phone_number varchar(255) not null,
-    employment_type enum("full-time", "part-time", "casual", "internship") default "full-time",
-    salary decimal(10,2) default 100,
-    message varchar(255) not null,
+    position_applied varchar(255) not null,
+    experience_level varchar(255) not null,
+    suburb varchar(255) not null,
+    is_driver tinyint(1) not null,
+    resume varchar(255) not null,
+    cover_letter varchar(255) not null,
+    supporting_document varchar(255) not null,
     status enum("pending", "contact", "hired", "rejected") default "pending",
-
-    foreign key(career_id) references career(id),
-
     createdAt timestamp default current_timestamp,
     updatedAt timestamp default current_timestamp on update current_timestamp
 );
