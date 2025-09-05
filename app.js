@@ -21,6 +21,7 @@ var corsOptions = {
     "https://vitalcaregroup.com.au",
     "https://www.vitalcaregroup.com.au",
     "https://account.vitalcaregroup.com.au",
+    "https://api.vitalcaregroup.com.au/"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
