@@ -5,6 +5,7 @@ const router = express.Router();
 import listAllTestimonial from "../controllers/list.testimonial.controller.js";
 import { createTestimonial } from "../controllers/create.testimonial.controller.js";
 import { deleteTestimonial } from "../controllers/delete.testimonial.controller.js";
+import { editTestimonial } from "../controllers/edit.testimonial.controller.js";
 
 import {
   authenticate,
@@ -19,6 +20,12 @@ router
     authorize("createAny", "testimonial"),
     createTestimonial
   )
-  .delete("/delete/:id", deleteTestimonial);
+  .delete("/delete/:id", deleteTestimonial)
+  .put(
+    "/edit/:id",
+    authenticate,
+    authorize("updateAny", "testimonial"),
+    editTestimonial
+  );
 
 export default router;
