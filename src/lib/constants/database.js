@@ -28,7 +28,7 @@ const connectDB = async () => {
   try {
     await sequelize.authenticate();
     if (env !== "production") {
-      await sequelize.sync({ alter: true });
+      // await sequelize.sync({ alter: true });
     } else {
       logger.info(
         "Production environment: Schema should be managed through migrations"
