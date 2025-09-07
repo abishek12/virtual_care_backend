@@ -16,11 +16,6 @@ ServiceModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    slugs: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
     description: { type: DataTypes.STRING, allowNull: false },
     featured_image: {
       type: DataTypes.TEXT,
